@@ -1,0 +1,15 @@
+<launch>
+
+    <include file="$(find-pkg-share nav2_bringup)/launch/bringup_launch.py">
+        <arg name="use_sim_time" value="true"/>
+        <arg name="map" value="$(find-pkg-share bt_navigator)/maps/map.yaml"/>
+    </include>
+
+    <node pkg="bt_navigator" exec="init_pose_publisher">
+        <param name="intial_pose_x" value="-2.0" />
+        <param name="intial_pose_y" value="-0.5" />
+        <param name="intial_pose_theta" value="0.0" />
+        <param name="intial_covariance" value="0.5" />
+    </node>
+
+</launch>

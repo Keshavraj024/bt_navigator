@@ -1,0 +1,14 @@
+<launch>
+
+    <include file="$(find-pkg-share gazebo_ros)/launch/gazebo.launch.py">
+        <arg name="world" value="$(find-pkg-share bt_navigator)/worlds/bt_world.world" />
+    </include>
+
+    <include file="$(find-pkg-share turtlebot3_gazebo)/launch/spawn_turtlebot3.launch.py"/> 
+
+
+    <node pkg="rviz2" exec="rviz2">
+        <param name="use_sim_time" value="true"/>
+    </node>
+
+</launch>

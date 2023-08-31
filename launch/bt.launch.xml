@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="bt_navigator" exec="bt_node">
+        <param name="file_location" value="$(find-pkg-share bt_navigator)/config/poses.yaml" />
+    </node>
+</launch>
