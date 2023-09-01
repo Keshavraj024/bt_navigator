@@ -1,11 +1,15 @@
 <launch>
 
     <include file="$(find-pkg-share gazebo_ros)/launch/gazebo.launch.py">
-        <arg name="world" value="$(find-pkg-share bt_navigator)/worlds/bt_world.world" />
+        <arg name="world" value="$(find-pkg-share bt_navigator)/worlds/bt_simple_world.world" />
     </include>
 
-    <include file="$(find-pkg-share turtlebot3_gazebo)/launch/spawn_turtlebot3.launch.py"/> 
+    <include file="$(find-pkg-share turtlebot3_gazebo)/launch/robot_state_publisher.launch.py"/>
 
+    <include file="$(find-pkg-share turtlebot3_gazebo)/launch/spawn_turtlebot3.launch.py">
+        <arg name="x_pose" value="2.0"/>
+        <arg name="y_pose" value="-4.0"/>
+    </include>
 
     <node pkg="rviz2" exec="rviz2">
         <param name="use_sim_time" value="true"/>
