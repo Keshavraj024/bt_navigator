@@ -4,8 +4,6 @@ GoToGoal::GoToGoal(const std::string &name, const BT::NodeConfiguration &config,
                    const rclcpp::Node::SharedPtr &node_ptr) : BT::StatefulActionNode(name, config), m_node_ptr(node_ptr)
 {
     m_action_client_ptr = rclcpp_action::create_client<nav2_msgs::action::NavigateToPose>(m_node_ptr, "/navigate_to_pose");
-    m_done_flag = false;
-
     const std::string file_location = m_node_ptr->get_parameter("file_location").as_string();
     RCLCPP_INFO(m_node_ptr->get_logger(), file_location.c_str());
     m_target_poses = YAML::LoadFile(file_location);
@@ -39,28 +37,52 @@ BT::NodeStatus GoToGoal::onStart()
     goalPose.pose.pose.orientation.z = q.getZ();
     goalPose.pose.pose.orientation.w = q.getW();
 
-    m_done_flag = false;
+    m_goalFeedback = GoalFeedback::RUNNING;
     m_action_client_ptr->async_send_goal(goalPose, sendGoalOptions);
     RCLCPP_INFO(m_node_ptr->get_logger(), "Sent Goal to Nav2\n");
     return BT::NodeStatus::RUNNING;
 }
 BT::NodeStatus GoToGoal::onRunning()
 {
-    if (m_done_flag)
+    switch (m_goalFeedback)
     {
-        RCLCPP_INFO(m_node_ptr->get_logger(), "Goal reached\n");
+    case GoalFeedback::SUCCEEDED:
         return BT::NodeStatus::SUCCESS;
-    }
-    else
-    {
+        break;
+    case GoalFeedback::ABORTED:
+        return BT::NodeStatus::FAILURE;
+        break;
+    case GoalFeedback::CANCELED:
+        return BT::NodeStatus::FAILURE;
+        break;
+    case GoalFeedback::RUNNING:
         return BT::NodeStatus::RUNNING;
+        break;
+    default:
+        return BT::NodeStatus::FAILURE;
+        break;
     }
 }
 
 void GoToGoal::navToPoseCallback(const rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>::WrappedResult &result)
 {
-    if (result.result)
+    switch (result.code)
     {
-        m_done_flag = true;
+    case rclcpp_action::ResultCode::SUCCEEDED:
+        RCLCPP_INFO(m_node_ptr->get_logger(), "Goal reached\n");
+        m_goalFeedback = GoalFeedback::SUCCEEDED;
+        break;
+    case rclcpp_action::ResultCode::ABORTED:
+        RCLCPP_ERROR(m_node_ptr->get_logger(), "Goal was aborted");
+        m_goalFeedback = GoalFeedback::ABORTED;
+        break;
+    case rclcpp_action::ResultCode::CANCELED:
+        RCLCPP_ERROR(m_node_ptr->get_logger(), "Goal was canceled");
+        m_goalFeedback = GoalFeedback::CANCELED;
+        break;
+    default:
+        RCLCPP_ERROR(m_node_ptr->get_logger(), "Unknown result code");
+        m_goalFeedback = GoalFeedback::UNKNOWN;
+        break;
     }
 }

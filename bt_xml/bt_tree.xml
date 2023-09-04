@@ -1,10 +1,30 @@
 <root BTCPP_format="4">
     <BehaviorTree ID="MainTree">
         <Sequence name="nav_to_goal_sequence">
-            <GoToGoal name="go_to_pose_1" pose="pose1"/>
-            <GoToGoal name="go_to_pose_2" pose="pose2"/>
-            <GoToGoal name="go_to_pose_3" pose="pose3"/>
-            <GoToGoal name="go_to_pose_4" pose="pose4"/>
+            <Fallback>
+                <GoToGoal name="go_to_pose_1" pose="pose1"/>
+                <RetryUntilSuccessful num_attempts="2">
+                    <GoToGoal name="go_to_pose_1" pose="pose1"/>
+                </RetryUntilSuccessful>
+            </Fallback>
+            <Fallback>
+                <GoToGoal name="go_to_pose_2" pose="pose2"/>
+                <RetryUntilSuccessful num_attempts="2">
+                    <GoToGoal name="go_to_pose_2" pose="pose2"/>
+                </RetryUntilSuccessful>
+            </Fallback>
+            <Fallback>
+                <GoToGoal name="go_to_pose_3" pose="pose3"/>
+                <RetryUntilSuccessful num_attempts="2">
+                    <GoToGoal name="go_to_pose_3" pose="pose3"/>
+                </RetryUntilSuccessful>
+            </Fallback>
+            <Fallback>
+                <GoToGoal name="go_to_pose_4" pose="pose4"/>
+                <RetryUntilSuccessful num_attempts="2">
+                    <GoToGoal name="go_to_pose_4" pose="pose4"/>
+                </RetryUntilSuccessful>
+            </Fallback>
         </Sequence>
     </BehaviorTree>
 </root>

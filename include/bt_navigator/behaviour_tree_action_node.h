@@ -66,6 +66,16 @@ public:
 private:
     rclcpp::Node::SharedPtr m_node_ptr;                                                      /**< Shared pointer to the ROS 2 node. */
     rclcpp_action::Client<nav2_msgs::action::NavigateToPose>::SharedPtr m_action_client_ptr; /**< Action client for NavigateToPose. */
-    bool m_done_flag;                                                                        /**< Flag indicating whether the navigation is complete. */
-    YAML::Node m_target_poses{};                                                             /**<store target poses in a YAML format*/
+    // Enum class representing the feedback status of a goal.
+    enum class GoalFeedback
+    {
+        SUCCEEDED,
+        ABORTED,
+        CANCELED,
+        RUNNING,
+        UNKNOWN
+    };
+    // The current feedback status of the goal, initialized to RUNNING.
+    GoalFeedback m_goalFeedback = GoalFeedback::RUNNING;
+    YAML::Node m_target_poses{}; /**<store target poses in a YAML format*/
 };
