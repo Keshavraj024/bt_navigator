@@ -1,5 +1,7 @@
 # Behavior Tree Mapping and Navigation
 
+![bt_map1](https://github.com/Keshavraj024/bt_navigator/assets/45878628/35465238-c779-4ea5-9cca-e964bbe4c175)
+
 ![BT Tree](supporting_materials/bt_tree.svg)
 (Generated using Groot2)
 
