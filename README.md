@@ -61,6 +61,13 @@ ros2 launch bt_navigator bt.launch.xml
 
 This launch file initiates the Behavior Tree node, which orchestrates the robot's autonomous exploration of seven different poses to map the environment.
 
+### Step 4: Saving the Map
+You can save the generated map using the nav2_map_server's map_saver_cli tool. When you are satisfied with the map, execute the following command to save it to a specified location
+
+```bash
+ros2 run nav2_map_server map_saver_cli -f path/to/save
+```
+
 ## Using the Behavior Tree
 
 The Behavior Tree is designed to autonomously navigate the robot through seven different poses. The robot will explore and map the environment, which can be later used for navigation tasks.
