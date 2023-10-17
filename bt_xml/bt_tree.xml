@@ -25,6 +25,24 @@
                     <GoToGoal name="go_to_pose_4" pose="pose4"/>
                 </RetryUntilSuccessful>
             </Fallback>
+            <Fallback>
+                <GoToGoal name="go_to_pose_5" pose="pose5"/>
+                <RetryUntilSuccessful num_attempts="2">
+                    <GoToGoal name="go_to_pose_5" pose="pose5"/>
+                </RetryUntilSuccessful>
+            </Fallback>
+            <Fallback>
+                <GoToGoal name="go_to_pose_6" pose="pose6"/>
+                <RetryUntilSuccessful num_attempts="2">
+                    <GoToGoal name="go_to_pose_6" pose="pose6"/>
+                </RetryUntilSuccessful>
+            </Fallback>
+            <Fallback>
+                <GoToGoal name="go_to_pose_7" pose="pose7"/>
+                <RetryUntilSuccessful num_attempts="2">
+                    <GoToGoal name="go_to_pose_7" pose="pose7"/>
+                </RetryUntilSuccessful>
+            </Fallback>
         </Sequence>
     </BehaviorTree>
 </root>

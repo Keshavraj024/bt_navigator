@@ -13,6 +13,7 @@ void BtWrapper::setup()
     const auto timeInterval = 500ms;
     m_timer = this->create_wall_timer(timeInterval, std::bind(&BtWrapper::updateBehaviourTree, this));
 }
+
 void BtWrapper::createBehaviourTree()
 {
     BT::BehaviorTreeFactory factory;

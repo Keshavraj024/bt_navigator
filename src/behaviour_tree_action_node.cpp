@@ -30,8 +30,8 @@ BT::NodeStatus GoToGoal::onStart()
 
     tf2::Quaternion q;
     q.setRPY(0, 0, targetpose[2]);
-    q.normalize(); // todo: why?
-    // goalPose.pose.pose.orientation = tf2::toMsg(q);
+    q.normalize();
+
     goalPose.pose.pose.orientation.x = q.getX();
     goalPose.pose.pose.orientation.y = q.getY();
     goalPose.pose.pose.orientation.z = q.getZ();
